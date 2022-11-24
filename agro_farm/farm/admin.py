@@ -73,6 +73,11 @@ class adminpost(admin.ModelAdmin):
         'title','post_image1' , 'post_image2', 'background', 'date'
     ]
 
+@admin.register(messageme)
+class admin_messages(admin.ModelAdmin):
+    list_display = [
+        'id','name', 'number', 'message' , 'sent_date'
+    ]
 
 
 
