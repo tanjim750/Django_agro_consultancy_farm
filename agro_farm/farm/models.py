@@ -217,7 +217,16 @@ class posts(models.Model):
 
 
 
+class messageme(models.Model):
+	id = models.AutoField(primary_key=True)
+	name = models.CharField(max_length=100)
+	email = models.CharField(max_length=100)
+	number = models.CharField(max_length=100)
+	message = models.TextField()
+	sent_date = models.DateTimeField(auto_now_add=True)
 
+	def __repr__(self) -> str:
+		return f"{self.name} {self.message}"
 
 
 
