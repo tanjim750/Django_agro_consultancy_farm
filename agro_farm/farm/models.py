@@ -199,7 +199,6 @@ class testimonial(models.Model):
 
 
 class posts(models.Model):
-	id = models.IntegerField(auto_created=True, null=True,blank=True)
 	postId = models.UUIDField(default=uuid.uuid4(), primary_key=True, editable=False)
 	background = models.ImageField(upload_to='img', null=True, blank=True)
 	button_1_name = models.CharField(max_length=100, null=True, blank=True)
@@ -215,7 +214,32 @@ class posts(models.Model):
 	def __repr__(self) -> str:
 		return f"{self.title} "
 
+class post_comments(models.Model):
+	commentId = models.UUIDField(unique=True, primary_key=True , editable=False)
+	postId = models.ForeignKey(posts, on_delete=models.CASCADE)
+	name = models.CharField(max_length=100)
+	image = models.ImageField(upload_to='img', default='img/deafult.png')
+	number = models.CharField(max_length=100)
+	comment = models.TextField()
+	date = models.DateTimeField(auto_now_add=True)
 
+	def __repr__(self) -> str:
+		return f"{self.name} "
+
+
+class comments_reply(models.Model):
+	replyId = models.AutoField(primary_key=True)
+	parent = models.ForeignKey(post_comments, on_delete=models.CASCADE)
+	postId = models.ForeignKey(posts, on_delete=models.CASCADE)
+	childrens = models.IntegerField(null=True, blank=True)
+	name = models.CharField(max_length=100)
+	image = models.ImageField(upload_to='img', default='img/deafult.png')
+	number = models.CharField(max_length=100)
+	reply = models.TextField()
+	date = models.DateTimeField(auto_now_add=True)
+
+	def __repr__(self) -> str:
+		return f"{self.name} "
 
 class messageme(models.Model):
 	id = models.AutoField(primary_key=True)
@@ -227,6 +251,8 @@ class messageme(models.Model):
 
 	def __repr__(self) -> str:
 		return f"{self.name} {self.message}"
+
+
 
 
 
